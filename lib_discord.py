@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 import lib
 import speech_to_text as stt
+from lib_github import GitHubManager
 
 # Charge les variables d'environnement
 load_dotenv()
@@ -16,10 +17,14 @@ intents.guilds = True     # Pour accéder aux serveurs
 intents.message_content = True
 client = discord.Client(intents=intents)
 
-# Initialisation du modèle au démarrage
+# Initialisation des services
 print("Initialisation du modèle Vosk...")
 stt.init_model()
 print("Modèle Vosk initialisé !")
+
+print("Initialisation de GitHub...")
+github_manager = GitHubManager()
+print("GitHub initialisé !")
 
 @client.event
 async def on_ready():
@@ -34,13 +39,28 @@ async def on_message(message):
             channel = discord.utils.get(message.guild.text_channels, id=message.channel.id)
             attachment = message.attachments[0]
             file_name = round(message.created_at.timestamp())
-            lib.dl_vocal_msg(attachment.url,file_name)
-            if channel:
-                await channel.send("On traite ça boss")
-            msg = stt.transcribe(None, None, f"mp3/{file_name}.ogg")
-            print(msg)
-            if channel:
-                await channel.send(f"J'ai compris : {msg}")
+            
+            # Téléchargement et traitement du message vocal
+            if lib.dl_vocal_msg(attachment.url, file_name):
+                if channel:
+                    await channel.send("On traite ça boss")
+                
+                # Transcription du message vocal
+                transcribed_text = stt.transcribe(None, None, f"mp3/{file_name}.ogg")
+                print(f"Texte transcrit : {transcribed_text}")
+                
+                if channel:
+                    await channel.send(f"J'ai compris : {transcribed_text}")
+                
+                # Création de l'issue GitHub
+                result = github_manager.create_issue(transcribed_text)
+                if result['success']:
+                    await channel.send(f"✅ Tâche créée ! Issue #{result['issue_number']} : {result['issue_url']}")
+                else:
+                    await channel.send(f"❌ Erreur lors de la création de la tâche : {result['error']}")
+            else:
+                if channel:
+                    await channel.send("❌ Erreur lors du téléchargement du message vocal")
 
 client.run(TOKEN)
 

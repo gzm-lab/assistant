@@ -1,45 +1,24 @@
-# Assistant Vocal Discord
+# Assistant Notes
 
-Un bot Discord qui convertit les messages vocaux en texte en utilisant Vosk, une solution de reconnaissance vocale légère et rapide.
+Repository privé pour stocker les notes, rappels et actions générés par mon assistant vocal.
 
-## Fonctionnalités
+## Structure
 
-- Capture des messages vocaux sur Discord
-- Conversion automatique de la parole en texte
-- Utilisation de Vosk pour une transcription rapide et légère
-- Support du français
-- Parfait pour Raspberry Pi
+Ce repository utilise les issues GitHub pour organiser les informations :
 
-## Prérequis
+- **Notes** : Pour les notes rapides et idées
+- **Rappels** : Pour les rappels et événements
+- **Actions** : Pour les tâches à effectuer
 
-- Python 3.x
-- Token Discord Bot
-- Dossier `mp3/` pour le stockage temporaire des fichiers audio
-- Connexion Internet pour le téléchargement initial du modèle Vosk
+## Labels
 
-## Installation
-
-1. Cloner le dépôt
-2. Installer les dépendances :
-```bash
-pip install discord.py python-dotenv vosk
-```
-3. Créer un fichier `.env` avec votre token Discord :
-```
-TOKEN=votre_token_discord
-```
+- `note` : Pour les notes
+- `reminder` : Pour les rappels
+- `action` : Pour les actions
+- `priority:high` : Priorité haute
+- `priority:medium` : Priorité moyenne
+- `priority:low` : Priorité basse
 
 ## Utilisation
 
-1. Lancer le bot :
-```bash
-python lib_discord.py
-```
-2. Envoyer un message vocal dans un canal Discord
-3. Le bot répondra avec la transcription du message
-
-## Structure du Projet
-
-- `lib_discord.py` : Configuration et logique du bot Discord
-- `speech_to_text.py` : Module de transcription vocale utilisant Vosk
-- `lib.py` : Fonctions utilitaires 
+Les issues sont créées automatiquement par l'assistant vocal via l'API GitHub 
