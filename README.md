@@ -1,5 +1,7 @@
 # 🎙️ Voice Assistant — GitHub Notes & Reminders
 
+> 🧒 **In plain English:** You send a voice message on Discord, the app listens, writes down what you said, and saves it as a to-do or reminder on GitHub — automatically, no typing needed!
+
 A voice-activated assistant that listens to your **Discord** voice messages, transcribes them offline, and automatically creates organized **GitHub Issues** as notes, reminders, and action items.
 
 ## 🧠 How It Works
